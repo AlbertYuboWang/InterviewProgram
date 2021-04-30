@@ -10,7 +10,7 @@ from random import randint
 import re
 
 @app.route('/', methods=['GET', 'POST'])
-#@cache.cached()
+@cache.cached()
 def index():
     if request.method == 'POST':
         if not current_user.is_authenticated:
