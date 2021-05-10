@@ -52,7 +52,7 @@ input[type=text] {
     border: 1px solid #ddd;
 }
 
-input[name=year] {
+input[name=date] {
     width: 55px;
 }
 
@@ -78,23 +78,23 @@ input[name=title] {
     border: 1px solid black;
 }
 
-.movie-list {
+.article-list {
     list-style-type: none;
     padding: 0;
     margin-bottom: 10px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.movie-list li {
+.article-list li {
     padding: 12px 24px;
     border-bottom: 1px solid #ddd;
 }
 
-.movie-list li:last-child {
+.article-list li:last-child {
     border-bottom:none;
 }
 
-.movie-list li:hover {
+.article-list li:hover {
     background-color: #f8f9fa;
 }
 
@@ -106,7 +106,7 @@ input[name=title] {
     display: inline;
 }
 
-.imdb {
+.read {
     font-size: 12px;
     font-weight: bold;
     color: black;

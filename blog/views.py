@@ -2,8 +2,8 @@
 from flask import render_template, request, url_for, redirect, flash, session, make_response
 from flask_login import login_user, login_required, logout_user, current_user
 
-from watchlist import app, db, cache
-from watchlist.models import User, Movie
+from blog import app, db, cache
+from blog.models import User, Article
 
 from captcha.image import ImageCaptcha
 from random import randint
@@ -17,57 +17,57 @@ def index():
             return redirect(url_for('index'))
 
         title = request.form['title']
-        year = request.form['year']
+        date = request.form['date']
         text = request.form['text']
 
-        if not title or not re.fullmatch("[0-9]{2}-[0-9]{2}-[0-9]{2}", year) or len(title) > 60:
+        if not title or not re.fullmatch("[0-9]{2}-[0-9]{2}-[0-9]{2}", date) or len(title) > 60:
             flash('Invalid input.')
             return redirect(url_for('index'))
 
-        movie = Movie(title=title, year=year, text=text)
-        db.session.add(movie)
+        article = Article(title=title, date=date, text=text)
+        db.session.add(article)
         db.session.commit()
         flash('Item created.')
         cache.delete(key='view//')
         return redirect(url_for('index'))
 
-    movies = Movie.query.all()
-    return render_template('index.html', movies=movies)
+    articles = Article.query.all()
+    return render_template('index.html', articles=articles)
 
 
-@app.route('/movie/edit/<int:movie_id>', methods=['GET', 'POST'])
+@app.route('/article/edit/<int:article_id>', methods=['GET', 'POST'])
 #@login_required
-def edit(movie_id):
-    movie = Movie.query.get_or_404(movie_id)
+def edit(article_id):
+    article = Article.query.get_or_404(article_id)
 
     if request.method == 'POST':
         if not current_user.is_authenticated:
             return redirect(url_for('index'))
 
         title = request.form['title']
-        year = request.form['year']
+        date = request.form['date']
         text = request.form['text']
 
-        if not title or not re.fullmatch("[0-9]{2}-[0-9]{2}-[0-9]{2}", year) or len(title) > 60:
+        if not title or not re.fullmatch("[0-9]{2}-[0-9]{2}-[0-9]{2}", date) or len(title) > 60:
             flash('Invalid input.')
-            return redirect(url_for('edit', movie_id=movie_id))
+            return redirect(url_for('edit', article_id=article_id))
 
-        movie.title = title
-        movie.year = year
-        movie.text = text
+        article.title = title
+        article.date = date
+        article.text = text
         db.session.commit()
         flash('Item updated.')
         cache.delete(key='view//')
         return redirect(url_for('index'))
 
-    return render_template('edit.html', movie=movie)
+    return render_template('edit.html', article=article)
 
 
-@app.route('/movie/delete/<int:movie_id>', methods=['POST'])
+@app.route('/article/delete/<int:article_id>', methods=['POST'])
 @login_required
-def delete(movie_id):
-    movie = Movie.query.get_or_404(movie_id)
-    db.session.delete(movie)
+def delete(article_id):
+    article = Article.query.get_or_404(article_id)
+    db.session.delete(article)
     db.session.commit()
     flash('Item deleted.')
     cache.delete(key='view//')

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Read Article</h3>
+<form method="post">
+    Title <input type="text" name="title" autocomplete="off" required value="{{ article.title }}">
+    Date <input type="text" name="date" autocomplete="off" required value="{{ article.date }}">
+    {% if current_user.is_authenticated %}
+    <input class="btn" type="submit" name="submit" value="Update">
+    {% endif %}
+    <br>
+    <textarea type="text" name="text" autocomplete="off" required value="{{ article.text }}" cols="70" rows="30">{{ article.text }}</textarea>
+</form>
+{% endblock %}

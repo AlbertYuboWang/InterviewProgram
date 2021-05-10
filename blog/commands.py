@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import click
 
-from watchlist import app, db
-from watchlist.models import User, Movie
+from blog import app, db
+from blog.models import User, Article
 
 
 @app.cli.command()
@@ -21,24 +21,24 @@ def forge():
     db.create_all()
 
     name = 'Wang Yubo'
-    movies = [
-        {'title': 'My Neighbor Totoro', 'year': '88-01-01', 'text': 'Good Day!'},
-        {'title': 'Dead Poets Society', 'year': '89-01-01', 'text': 'Nice Day!'},
-        {'title': 'A Perfect World', 'year': '93-01-01', 'text': 'Good Weather!'},
-        {'title': 'Leon', 'year': '94-01-01', 'text': 'Nice Weather!'},
-        {'title': 'Mahjong', 'year': '96-01-01', 'text': 'Good Day!'},
-        {'title': 'Swallowtail Butterfly', 'year': '96-01-01', 'text': 'Good Day!'},
-        {'title': 'King of Comedy', 'year': '99-01-01', 'text': 'Good Day!'},
-        {'title': 'Devils on the Doorstep', 'year': '99-01-01', 'text': 'Good Day!'},
-        {'title': 'WALL-E', 'year': '08-01-01', 'text': 'Good Day!'},
-        {'title': 'The Pork of Music', 'year': '12-01-01', 'text': 'Good Day!'},
+    articles = [
+        {'title': 'My Neighbor Totoro', 'date': '88-01-01', 'text': 'Good Day!'},
+        {'title': 'Dead Poets Society', 'date': '89-01-01', 'text': 'Nice Day!'},
+        {'title': 'A Perfect World', 'date': '93-01-01', 'text': 'Good Weather!'},
+        {'title': 'Leon', 'date': '94-01-01', 'text': 'Nice Weather!'},
+        {'title': 'Mahjong', 'date': '96-01-01', 'text': 'Good Day!'},
+        {'title': 'Swallowtail Butterfly', 'date': '96-01-01', 'text': 'Good Day!'},
+        {'title': 'King of Comedy', 'date': '99-01-01', 'text': 'Good Day!'},
+        {'title': 'Devils on the Doorstep', 'date': '99-01-01', 'text': 'Good Day!'},
+        {'title': 'WALL-E', 'date': '08-01-01', 'text': 'Good Day!'},
+        {'title': 'The Pork of Music', 'date': '12-01-01', 'text': 'Good Day!'},
     ]
 
     user = User(name=name)
     db.session.add(user)
-    for m in movies:
-        movie = Movie(title=m['title'], year=m['year'], text=m['text'])
-        db.session.add(movie)
+    for m in articles:
+        article = Article(title=m['title'], date=m['date'], text=m['text'])
+        db.session.add(article)
 
     db.session.commit()
     click.echo('Done.')

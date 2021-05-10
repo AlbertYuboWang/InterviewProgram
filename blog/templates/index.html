@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>{{ movies|length }} Blogs</p>
+<p>{{ articles|length }} Articles</p>
 {% if current_user.is_authenticated %}
 <form method="post">
     Title <input type="text" name="title" autocomplete="off" required>
-    Date <input type="text" name="year" autocomplete="off" required>
+    Date <input type="text" name="date" autocomplete="off" required>
     <input class="btn" type="submit" name="submit" value="Add">
     <br>
     <textarea type="text" name="text" autocomplete="off" required cols="70" rows="5"></textarea>
 </form>
 {% endif %}
-<ul class="movie-list">
-    {% for movie in movies %}
-    <li>{{ movie.title }} - {{ movie.year }}
+<ul class="article-list">
+    {% for article in articles %}
+    <li>{{ article.title }} - {{ article.date }}
         <span class="float-right">
-            <a class="imdb" href="{{ url_for('edit', movie_id=movie.id) }}">Read</a>
+            <a class="read" href="{{ url_for('edit', article_id=article.id) }}">Read</a>
             {% if current_user.is_authenticated %}
-            <form class="inline-form" method="post" action="{{ url_for('delete', movie_id=movie.id) }}">
+            <form class="inline-form" method="post" action="{{ url_for('delete', article_id=article.id) }}">
                 <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
             </form>
             {% endif %}
